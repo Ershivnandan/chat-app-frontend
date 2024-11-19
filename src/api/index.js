@@ -26,7 +26,22 @@ const signupUser = (data)=> {
     return apiClient.post('users/signup', data)
 }
 
+const getUserChats = () =>{
+    return apiClient.get('chats')
+}
+
+const getChatsByChatId = (chatId)=>{
+    return apiClient.post(`chats/${chatId}`)
+}
+
+const sendMessage = (chatData)=>{
+    return apiClient.post(`chats/send`, chatData)
+}
+
 export{
     loginUser,
-    signupUser
+    signupUser,
+    getUserChats,
+    getChatsByChatId,
+    sendMessage
 }
