@@ -1,15 +1,32 @@
 import axios from "axios";
 
-const appClient = axios.create({
+const apiClient = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URI,
     withCredentials: true,
     timeout: 120000
-})
+});
 
-const loginUser = async() =>{
-    await axios.post('')
+apiClient.interceptors.request.use(
+    function (config){
+        const token = localStorage.getItem("authToken");
+
+        config.headers.Authorization = `Bearer ${token}`;
+        return config;
+    },
+    function (error){
+        return Promise.reject(error)
+    }
+)
+
+const loginUser = (data) =>{
+    return apiClient.post('users/login', data)
+}
+
+const signupUser = (data)=> {
+    return apiClient.post('users/signup', data)
 }
 
 export{
-    loginUser
+    loginUser,
+    signupUser
 }
