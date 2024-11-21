@@ -4,6 +4,7 @@ import Login from "../pages/Auth/Login";
 import Home from "../pages/Home/Home";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import { useAuth } from "../context/AuthContext";
+import Signup from "../pages/Auth/Signup";
 
 const Allroutes = () => {
   const { user } = useAuth();
@@ -13,6 +14,7 @@ const Allroutes = () => {
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
         {/* Private Routes */}
         <Route
