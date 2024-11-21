@@ -18,13 +18,18 @@ apiClient.interceptors.request.use(
     }
 )
 
-const loginUser = (data) =>{
+const loginUser =  (data) =>{
     return apiClient.post('users/login', data)
 }
 
 const signupUser = (data)=> {
     return apiClient.post('users/signup', data)
 }
+
+const googleLogin = () => {
+    window.location.href = `${apiClient.defaults.baseURL}users/auth/google`;
+  };
+  
 
 const getUserChats = () =>{
     return apiClient.get('chats')
@@ -43,5 +48,6 @@ export{
     signupUser,
     getUserChats,
     getChatsByChatId,
-    sendMessage
+    sendMessage,
+    googleLogin,
 }
