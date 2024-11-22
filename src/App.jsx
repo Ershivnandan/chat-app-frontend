@@ -1,12 +1,12 @@
 import Allroutes from "./allroutes/Allroutes";
-import ThemeSwitch from "./components/theme/ThemeSwitch";
+import "./App.css"
 
 const App = () => {
   return (
-    <>
-      <ThemeSwitch/>
+    <div className="bg-white dark:bg-gray-900 dark:text-white ">
+   
       <Allroutes />
-    </>
+    </div>
   );
 };
 

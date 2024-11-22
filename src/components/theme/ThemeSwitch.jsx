@@ -9,7 +9,7 @@ const ThemeSwitch = () => {
     <>
       <button
         onClick={toggleTheme}
-        className="px-4 py-2 rounded bg-primary-light dark:bg-primary-dark text-white"
+        className="px-4 py-2 rounded text-black text-2xl dark:text-white"
       >
         {theme === "light" ? <MdDarkMode /> : <MdLightMode />} 
       </button>
