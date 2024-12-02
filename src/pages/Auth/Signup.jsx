@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { googleLogin, signupUser } from "../../api";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -18,8 +19,10 @@ const Signup = () => {
     try {
       await signupUser({ username, email, password });
       navigate("/login");
+      toast.success("Signup Successfull")
     } catch (error) {
       setError(error.message);
+      toast.error("Signup Failed")
     }
   };
 
@@ -42,7 +45,7 @@ const Signup = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-4 py-2 border rounded text-black focus:outline-none focus:ring focus:border-blue-300"
                 required
               />
             </div>
@@ -54,7 +57,7 @@ const Signup = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-4 py-2 border rounded text-black focus:outline-none focus:ring focus:border-blue-300"
                 required
               />
             </div>
@@ -66,7 +69,7 @@ const Signup = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded text-black dark-text-white focus:outline-none focus:ring focus:border-blue-300"
+              className="w-full px-4 py-2 border rounded text-black text-black dark-text-white focus:outline-none focus:ring focus:border-blue-300"
               required
             />
 
@@ -97,7 +100,7 @@ const Signup = () => {
             </button>
           </div>
 
-          <div className="text-white dark:text-black text-center mt-4 font-medium">
+          <div className="dark:text-white text-black text-center mt-4 font-medium">
             Already have account?{" "}
             <Link to={"/login"} className="text-blue-500">
               Login

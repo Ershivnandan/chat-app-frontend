@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { googleLogin, loginUser } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,8 +20,10 @@ const Login = () => {
       const response = await loginUser({ email, password });
       login(response.data);
       navigate("/dashboard");
+      toast.success("Login Successfull")
     } catch (err) {
       setError(err.message);
+      toast.error("Login Fail! Check Credentials")
     }
   };
 
@@ -86,7 +89,7 @@ const Login = () => {
           </button>
         </div>
 
-        <div className="text-white dark:text-black text-center mt-4 font-medium">
+        <div className="dark:text-white text-black text-center mt-4 font-medium">
           Dont have account? <Link to={'/signup'} className="text-blue-500">Sign Up</Link>
         </div>
       </div>
