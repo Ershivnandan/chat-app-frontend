@@ -89,7 +89,7 @@ const Login = () => {
           </button>
         </div>
 
-        <div className="dark:text-white text-black text-center mt-4 font-medium">
+        <div className=" text-black text-center mt-4 font-medium">
           Dont have account? <Link to={'/signup'} className="text-blue-500">Sign Up</Link>
         </div>
       </div>
