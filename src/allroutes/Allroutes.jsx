@@ -2,9 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "../utils/privateRoute/PrivateRoute";
 import Login from "../pages/Auth/Login";
 import Home from "../pages/Home/Home";
-import Dashboard from "../pages/Dashboard/Dashboard";
 import { useAuth } from "../context/AuthContext";
 import Signup from "../pages/Auth/Signup";
+import HomePage from "../pages/Dashboard/HomePage";
 
 const Allroutes = () => {
   const { user } = useAuth();
@@ -21,7 +21,7 @@ const Allroutes = () => {
           path="/dashboard"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <HomePage />
             </PrivateRoute>
           }
         />
