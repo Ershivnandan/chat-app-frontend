@@ -42,6 +42,23 @@ const sendMessage = (chatData) => {
   return apiClient.post(`chats/send`, chatData);
 };
 
+const getUserDetails = () => {
+  return apiClient.get(`users/getUser`);
+};
+
+const getUserByName = async (query) => {
+  const res = await apiClient.get(`users/getuserbyname?userName=${query}`);
+  return res;
+};
+
+const addFriend = async (friendId) => {
+  try {
+    return await apiClient.post(`friends/send-request`, friendId);
+  } catch (error) {
+    return error
+  }
+};
+
 export {
   loginUser,
   signupUser,
@@ -49,4 +66,7 @@ export {
   getChatsByChatId,
   sendMessage,
   googleLogin,
+  getUserDetails,
+  getUserByName,
+  addFriend,
 };

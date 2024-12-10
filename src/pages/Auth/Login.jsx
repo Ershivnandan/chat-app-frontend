@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
-import { googleLogin, loginUser } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { googleLogin, loginUser } from "../../api/apiStore";
 
 const Login = () => {
   const navigate = useNavigate();

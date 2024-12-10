@@ -4,12 +4,14 @@ import "./App.css";
 import ThemeContext from "./utils/themeContext/ThemeContext";
 import { useContext } from "react";
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from "./components/navbar/Navbar";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white ">
+      <Navbar/>
       <Allroutes />
 
       <ToastContainer
