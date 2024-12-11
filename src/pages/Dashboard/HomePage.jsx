@@ -1,6 +1,8 @@
 import  { useEffect, useState } from "react";
 import { socket } from "../../utils/socket/Socket"
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
+import { getUserDetails } from "../../api/apiStore";
 
 
 const HomePage = () => {
@@ -10,6 +12,7 @@ const HomePage = () => {
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const {userData, setUserData}  = useAuth();
 
   useEffect(() => {
     const fetchFriendRequests = async () => {
@@ -94,6 +97,19 @@ const HomePage = () => {
       console.error("Error sending message:", error);
     }
   };
+
+  const fetchUserData = async()=>{
+    try {
+      const res = await getUserDetails();
+      setUserData(res.data)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  useEffect(()=>{
+    fetchUserData()
+  },[])
 
   return (
     <div className="home-page">

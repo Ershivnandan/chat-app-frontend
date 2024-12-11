@@ -1,9 +1,8 @@
-import Navbar from "../../components/navbar/Navbar";
+
 
 const Home = () => {
   return (
     <>
-    <Navbar/>
       <div className="mx-5 h-screen">
         <div className="flex md:flex-row  flex-col-reverse justify-between mt-5">
           <div className="w-full flex flex-col gap-4 justify-center items-center text-center">

@@ -42,8 +42,13 @@ const sendMessage = (chatData) => {
   return apiClient.post(`chats/send`, chatData);
 };
 
-const getUserDetails = () => {
-  return apiClient.get(`users/getUser`);
+const getUserDetails = async() => {
+  try {
+    const res =  await apiClient.get(`users/getUser`);
+    return res
+  } catch (error) {
+    return error
+  }
 };
 
 const getUserByName = async (query) => {
@@ -59,6 +64,33 @@ const addFriend = async (friendId) => {
   }
 };
 
+const getNotifications = async()=>{
+  try {
+    return await apiClient.get(`friends/getAll-request`)
+  } catch (error) {
+    return error
+  }
+}
+
+const acceptFriendRequest = async(data)=>{
+  console.log(data.requestId)
+  try {
+    const res = await apiClient.post(`friends/accept-request`, data);
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
+const rejectFriendRequest = async(data)=>{
+  try {
+    const res = await apiClient.post(`friends/reject-request`, data);
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
 export {
   loginUser,
   signupUser,
@@ -69,4 +101,7 @@ export {
   getUserDetails,
   getUserByName,
   addFriend,
+  getNotifications,
+  acceptFriendRequest,
+  rejectFriendRequest
 };
