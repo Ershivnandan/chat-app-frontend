@@ -3,6 +3,7 @@ import { socket } from "../../utils/socket/Socket"
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { getUserDetails } from "../../api/apiStore";
+import ChatArea from "../../components/chat/ChatArea";
 
 
 const HomePage = () => {
@@ -112,68 +113,14 @@ const HomePage = () => {
   },[])
 
   return (
-    <div className="home-page">
-      <div className="sidebar">
-        <h2>Chats</h2>
-        {/* <ul>
-          {chats && chats.map((chat) => (
-            <li key={chat._id} onClick={() => openChat(chat._id)}>
-              Chat with {chat.participants.join(", ")}
-            </li>
-          ))}
-        </ul> */}
+    <>
+      <div className="flex px-5">
+        <div className="w-[30%] border border-red-500"></div>
+        <div className="w-full border border-e-blue-500">
+            <ChatArea/>
+        </div>
       </div>
-      <div className="content">
-        {activeChat ? (
-          <div className="chat-window">
-            <h2>Chat</h2>
-            <div className="messages">
-              {messages.map((message) => (
-                <div
-                  key={message._id}
-                  className={`message ${
-                    message.sender === localStorage.getItem("userId")
-                      ? "sent"
-                      : "received"
-                  }`}
-                >
-                  {message.content}
-                </div>
-              ))}
-            </div>
-            <div className="message-input">
-              <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-              />
-              <button onClick={sendMessage}>Send</button>
-            </div>
-          </div>
-        ) : (
-          <h2>Select a chat to start messaging</h2>
-        )}
-      </div>
-      <div className="notifications">
-        <h2>Notifications</h2>
-        <ul>
-          {notifications.map((notification, index) => (
-            <li key={index}>{notification.message}</li>
-          ))}
-        </ul>
-        <h2>Friend Requests</h2>
-        {/* <ul>
-          {friendRequests && friendRequests.map((request) => (
-            <li key={request._id}>
-              {request.sender.username}
-              <button onClick={() => handleAcceptRequest(request._id)}>
-                Accept
-              </button>
-            </li>
-          ))}
-        </ul> */}
-      </div>
-    </div>
+    </>
   );
 };
 

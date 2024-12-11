@@ -56,15 +56,15 @@ const getUserByName = async (query) => {
   return res;
 };
 
-const addFriend = async (friendId) => {
+const addFriend = async (data) => {
   try {
-    return await apiClient.post(`friends/send-request`, friendId);
+    return await apiClient.post(`friends/send-request`, data);
   } catch (error) {
     return error
   }
 };
 
-const getNotifications = async()=>{
+const getAllFriendRequests = async()=>{
   try {
     return await apiClient.get(`friends/getAll-request`)
   } catch (error) {
@@ -91,6 +91,15 @@ const rejectFriendRequest = async(data)=>{
   }
 }
 
+const getNotifications = async()=>{
+  try {
+    const res = await apiClient.get('notifications/getNotification');
+    return res
+  } catch (error) {
+    return error
+  }
+}
+
 export {
   loginUser,
   signupUser,
@@ -101,7 +110,8 @@ export {
   getUserDetails,
   getUserByName,
   addFriend,
-  getNotifications,
+  getAllFriendRequests,
   acceptFriendRequest,
-  rejectFriendRequest
+  rejectFriendRequest,
+  getNotifications
 };
