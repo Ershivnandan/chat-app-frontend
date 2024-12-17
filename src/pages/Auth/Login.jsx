@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { googleLogin, loginUser } from "../../api/apiStore";
+import { getUserDetails, googleLogin, loginUser } from "../../api/apiStore";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
+  const { login, setUserData } = useAuth();
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
@@ -20,6 +20,9 @@ const Login = () => {
       const response = await loginUser({ email, password });
       login(response.data);
       navigate("/dashboard");
+      const userData = await getUserDetails();
+      setUserData(userData);
+      localStorage.setItem("userInfo", JSON.stringify(userData))
       toast.success("Login Successfull")
     } catch (err) {
       setError(err.message);

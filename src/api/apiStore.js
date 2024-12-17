@@ -19,11 +19,11 @@ apiClient.interceptors.request.use(
 );
 
 const loginUser = (data) => {
-  return apiClient.post("users/login", data);
+  return apiClient.post("/users/login", data);
 };
 
 const signupUser = (data) => {
-  return apiClient.post("users/signup", data);
+  return apiClient.post("/users/signup", data);
 };
 
 const googleLogin = () => {
@@ -31,20 +31,20 @@ const googleLogin = () => {
 };
 
 const getUserChats = () => {
-  return apiClient.get("chats");
+  return apiClient.get("/chats");
 };
 
 const getChatsByChatId = (chatId) => {
-  return apiClient.post(`chats/${chatId}`);
+  return apiClient.post(`/chats/${chatId}`);
 };
 
 const sendMessage = (chatData) => {
-  return apiClient.post(`chats/send`, chatData);
+  return apiClient.post(`/chats/send`, chatData);
 };
 
 const getUserDetails = async() => {
   try {
-    const res =  await apiClient.get(`users/getUser`);
+    const res =  await apiClient.get(`/users/getUser`);
     return res
   } catch (error) {
     return error
@@ -52,13 +52,14 @@ const getUserDetails = async() => {
 };
 
 const getUserByName = async (query) => {
-  const res = await apiClient.get(`users/getuserbyname?userName=${query}`);
+  const res = await apiClient.get(`/users/getuserbyname?userName=${query}`);
   return res;
 };
 
 const addFriend = async (data) => {
+  console.log(data)
   try {
-    return await apiClient.post(`friends/send-request`, data);
+    return await apiClient.post(`/friends/send-request`, data);
   } catch (error) {
     return error
   }
@@ -66,16 +67,16 @@ const addFriend = async (data) => {
 
 const getAllFriendRequests = async()=>{
   try {
-    return await apiClient.get(`friends/getAll-request`)
+    return await apiClient.get(`/friends/getAll-request`)
   } catch (error) {
     return error
   }
 }
 
 const acceptFriendRequest = async(data)=>{
-  console.log(data.requestId)
+  console.log(data)
   try {
-    const res = await apiClient.post(`friends/accept-request`, data);
+    const res = await apiClient.post(`/friends/accept-request`, data);
     return res
   } catch (error) {
     return error
@@ -84,7 +85,7 @@ const acceptFriendRequest = async(data)=>{
 
 const rejectFriendRequest = async(data)=>{
   try {
-    const res = await apiClient.post(`friends/reject-request`, data);
+    const res = await apiClient.post(`/friends/reject-request`, data);
     return res
   } catch (error) {
     return error
@@ -93,7 +94,7 @@ const rejectFriendRequest = async(data)=>{
 
 const getNotifications = async()=>{
   try {
-    const res = await apiClient.get('notifications/getNotification');
+    const res = await apiClient.get('/notifications/getNotification');
     return res
   } catch (error) {
     return error

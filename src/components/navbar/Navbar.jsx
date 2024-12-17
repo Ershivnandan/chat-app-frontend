@@ -13,6 +13,7 @@ import {
 import { FaBell } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { io } from "socket.io-client";
+import { socket } from "../../utils/socket/Socket";
 
 const Navbar = () => {
   const { user, userData, logout } = useAuth();
@@ -27,17 +28,14 @@ const Navbar = () => {
     useState(false);
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
 
-  const socket = io(import.meta.env.VITE_SERVER_URI);
-
 
   useEffect(() => {
     if (user) {
       socket.emit("join", { userId: user._id });
 
-      // Listen for notifications
       socket.on("new_notification", (notification) => {
         setNotifications((prev) => [notification, ...prev]);
-        toast.info(notification.message); // Customize toast messages
+        toast.info(notification.message);
       });
     }
 
@@ -86,6 +84,7 @@ const Navbar = () => {
     try {
       const response = await addFriend({ friendId });
       toast.success("Friend request sent!");
+      closeAllDropdowns()
     } catch (error) {
       console.error("Error sending friend request:", error);
       toast.error("Failed to send friend request.");
@@ -117,19 +116,29 @@ const Navbar = () => {
   const handleAcceptRequest = async (requestId, username) => {
     try {
       const res = await acceptFriendRequest({ requestId });
-      toast.success(`${username} is now your friend`);
-      // Remove the notification for this accepted request
-      setNotifications((prev) => prev.filter((notif) => notif._id !== requestId));
+      if (res.data.success) {
+        toast.success(`${username} is now your friend`);
+        setNotifications((prev) => prev.filter((notif) => notif._id !== requestId));
+      } else {
+        toast.error(res.data.message || "Failed to accept request");
+      }
+      closeAllDropdowns()
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.message || "Error occurred");
+      } else {
+        toast.error("Failed to accept friend request.");
+      }
     }
   };
+  
 
   const handleRejectRequest = async (requestId, username) => {
     try {
       const res = await rejectFriendRequest({ requestId });
       toast.warn(`${username}'s request has been removed`);
-      // Remove the notification for this rejected request
+      closeAllDropdowns()
       setNotifications((prev) => prev.filter((notif) => notif._id !== requestId));
     } catch (error) {
       console.log(error.message);
@@ -144,6 +153,12 @@ const Navbar = () => {
 
   const toggleNotificationDropdown = () => {
     setIsNotificationDropdownVisible((prev) => !prev);
+  };
+  
+  const closeAllDropdowns = () => {
+    setIsNotificationDropdownVisible(false);
+    setIsProfileDropdownVisible(false);
+    setIsDropdownVisible(false);
   };
 
   const toggleProfileDropdown = () => {
@@ -257,11 +272,9 @@ const Navbar = () => {
                             </button>
                           </div>
                         )}
-                        {/* Show "Request Rejected" message for rejected friend requests */}
                         {notification.type === "friend_request_rejected" && (
                           <div className="text-red-500 text-sm">Request Rejected</div>
                         )}
-                        {/* Show "Request Accepted" message for accepted friend requests */}
                         {notification.type === "friend_request_accepted" && (
                           <div className="text-green-500 text-sm">Request Accepted</div>
                         )}
